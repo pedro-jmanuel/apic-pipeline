@@ -1,0 +1,42 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: apic-task-clone-api-products
+spec:
+  params:
+    - name: apic-host
+      default: "https://api-manager.us-east-a.apiconnect.automation.ibm.com"
+    - name: apic-org
+    - name: apic-catalog
+    - name: apic-api-token
+    - name: apic-product-file
+    - name: apic-api-file
+    - name: apic-repo-url
+    - name: username
+      default: ""
+    - name: password
+      default: ""
+    - name: branch
+      default: "main"
+  workspaces:
+    - name: source
+  steps:
+    - name: clone
+      image: alpine/git
+      script: |
+        git clone -b $(params.branch) $(params.apic-repo-url) $(workspaces.source.path)
+    - name: debug
+      image: busybox
+      script: |
+        echo "Verificando workspace:"
+        ls -R $(workspaces.source.path)
+    - name: publish
+      image: curlimages/curl
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/sh
+        echo "PWD:"
+        pwd
+        echo "Workspace:"
+        ls -lah
+        curl -v -k --fail-with-body -F "product=@$(params.apic-product-file);type=application/yaml" -F "openapi=@$(params.apic-api-file);type=application/yaml" -H "Authorization: Bearer $(params.apic-api-token)" -H 'Content-Type: multipart/form-data' -H 'Accept: */*' $(params.apic-host)/api/catalogs/$(params.apic-org)/$(params.apic-catalog)/publish

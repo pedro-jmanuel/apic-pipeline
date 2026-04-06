@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: apic-pipeline-publish-api-products
+spec:
+  params:
+    - name: apic-org
+    - name: apic-catalog
+    - name: apic-api-token
+    - name: apic-product-file
+    - name: apic-api-file
+    - name: apic-repo-url
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: clone-and-publish
+      taskRef:
+        name: apic-task-clone-api-products
+      params:
+        - name: apic-org
+          value: $(params.apic-org)
+        - name: apic-catalog
+          value: $(params.apic-catalog)
+        - name: apic-api-token
+          value: $(params.apic-api-token)
+        - name: apic-product-file
+          value: $(params.apic-product-file)
+        - name: apic-api-file
+          value: $(params.apic-api-file)
+        - name: apic-repo-url
+          value: $(params.apic-repo-url)
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+
+   
