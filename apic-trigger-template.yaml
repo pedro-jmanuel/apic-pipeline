@@ -1,0 +1,30 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: apic-commit-tt
+spec :
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1
+      kind: PipelineRun
+      metadata:
+        generateName: apic-pipeline-publish-api-products-run-
+      spec:
+        pipelineRef:
+          name: apic-pipeline-publish-api-products
+        params:
+        - name: apic-org
+          value: apic-idevpedro
+        - name: apic-catalog
+          value: sandbox
+        - name: apic-api-token
+          value: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjU3N2UxZDhiLTM4MGQtNGZmNi04NjBmLTNiZGM5MmM5ZWRlYyJ9.eyJqdGkiOiI0YTM0MzBiZC04ZmJjLTQxMmItYWM0OS1jZDJhYjY1ZTI0NzEiLCJuYW1lc3BhY2UiOiI5NmY3MzljZC1lNmYyLTQwOTItYmVlZi0xNGY3MjdiODI1ODA6OWIzNzUxM2MtMzI0NS00MGJiLWFmNGItYmFlMGIxOGE3ZWIyOjcwOTA3Y2U5LTQxMDMtNDg4NC05NTRlLTg0MGUyZmY2YjA4NCIsImF1ZCI6Ii9hcGkvY2xvdWQvcmVnaXN0cmF0aW9ucy85M2M5NTc2ZS00YTAwLTRiY2QtYTNlZC1iN2EyMDAwN2YwY2IiLCJzdWIiOiIvYXBpL3VzZXItcmVnaXN0cmllcy85NmY3MzljZC1lNmYyLTQwOTItYmVlZi0xNGY3MjdiODI1ODAvOWIzNzUxM2MtMzI0NS00MGJiLWFmNGItYmFlMGIxOGE3ZWIyL3VzZXJzLzcwOTA3Y2U5LTQxMDMtNDg4NC05NTRlLTg0MGUyZmY2YjA4NCIsImlzcyI6IklCTSBBUEkgQ29ubmVjdCIsImV4cCI6MTc3NTM2MzgxNCwiaWF0IjoxNzc1MzM1MDE0LCJncmFudF90eXBlIjoiYXBpX2tleSIsInJlZnJlc2hfdG9rZW4iOiJlN2NjYzI3NS1iNjdlLTRkMWEtOGE4MS0yMTZkMDRhMzUzNmQiLCJ1c2VyX3JlZ2lzdHJ5X3VybCI6Ii9hcGkvdXNlci1yZWdpc3RyaWVzLzk2ZjczOWNkLWU2ZjItNDA5Mi1iZWVmLTE0ZjcyN2I4MjU4MC85YjM3NTEzYy0zMjQ1LTQwYmItYWY0Yi1iYWUwYjE4YTdlYjIiLCJyZWFsbSI6InByb3ZpZGVyL2libS12ZXJpZnkiLCJ1c2VybmFtZSI6InBlZHJvLmptYW51ZWxAaG90bWFpbC5jb20iLCJpZF90b2tlbiI6ImV5SmhiR2NpT2lKU1V6STFOaUlzSW5SNWNDSTZJa3BYVkNJc0ltdHBaQ0k2SWpBMVpEZzJaamxrTFRKak5UWXRORFJrTWkwNU4ySXdMVFkzTnpOak1ESmxPVEUwTnlKOS5leUoxYzJWeWJtRnRaU0k2SW5CbFpISnZMbXB0WVc1MVpXeEFhRzkwYldGcGJDNWpiMjBpTENKc1lYTjBYMjVoYldVaU9pSk5ZVzUxWld3aUxDSm1hWEp6ZEY5dVlXMWxJam9pVUdWa2NtOGlMQ0psYldGcGJDSTZJbkJsWkhKdkxtcHRZVzUxWld4QWFHOTBiV0ZwYkM1amIyMGlMQ0pwWVhRaU9qRTNOelV5TkRZNE9EQjkubEJfek51dUJ2LTdYVzVhTnVod0I4eE95X04xamtnTWlZUmNjNVZCaGpsbXJ0T3lYSVk0UmwwMHM4SVNsQ3l6LS05OVo5cktGQnNldkdJVFFTRU5KTGlUd0pKM0JjWVBxeTBaaTBfMXF0a2VSU2RWSEs0cG1PRzhoR2NpeDBqVG0zT09KOW1scDVtQ1YxdzZFR1UtM2xMYzJmR2pxVTFLaFZjaHhKQ1FCTnVSMmtFdlBNQ1c4WFZ5SHktRmwwaEh1TzNXQTZCbG1welZYem5ScjNDWDUzSi1menp6NF9wUGpIeXczZUV0RGJ5RkF4emdWUTRuVkJHazBNWWZVVmlkYXhYalROS0tXcUNGczlQMjNleGRTVV8xRGZ0UmhENmlzMzhlblN1QVhnRE9qVHhYUmNLNnpYWUhmSjExYXlGdVFjSXpqMEh0LUFJaC1TLU9lR3l6bFFnIiwic2NvcGVzIjpbImNsb3VkOnZpZXciLCJjbG91ZDptYW5hZ2UiLCJwcm92aWRlci1vcmc6dmlldyIsInByb3ZpZGVyLW9yZzptYW5hZ2UiLCJvcmc6dmlldyIsIm9yZzptYW5hZ2UiLCJwcm9kdWN0LWRyYWZ0czp2aWV3IiwicHJvZHVjdC1kcmFmdHM6ZWRpdCIsImFwaS1kcmFmdHM6dmlldyIsImFwaS1kcmFmdHM6ZWRpdCIsImNoaWxkOnZpZXciLCJjaGlsZDpjcmVhdGUiLCJjaGlsZDptYW5hZ2UiLCJwcm9kdWN0OnZpZXciLCJwcm9kdWN0OnN0YWdlIiwicHJvZHVjdDptYW5hZ2UiLCJhcHByb3ZhbDp2aWV3IiwiYXBwcm92YWw6bWFuYWdlIiwiYXBpLWFuYWx5dGljczp2aWV3IiwiYXBpLWFuYWx5dGljczptYW5hZ2UiLCJjb25zdW1lci1vcmc6dmlldyIsImNvbnN1bWVyLW9yZzptYW5hZ2UiLCJhcHA6dmlldzphbGwiLCJhcHA6bWFuYWdlOmFsbCIsIm15OnZpZXciLCJteTptYW5hZ2UiLCJ3ZWJob29rOnZpZXciXX0.hUvxwkDrCtfGT0S8aKvXpyl-0CNbrtX6MnB4J5C35iyy_XMA03nv0ui__QdwxWEuZbX8VVdBdEaWR13njahAUNS8v--VI0zIEMqCiGGwIYaDXAKiFXaSZdmsIQVnMvessF0JtDeE4NH6VQIJXUuGspw3AqaTFtqWYSxHXqKvmBISRtnBaf4Y85YDbb83ncmd7TEJ8aSdLzlmTuebacI_3wHfgsl9IOoH07LbDr1a3QvoBrqaeQnqWq2yCINOel3psZW1oFs9rV_PbjgiwQh77HOofmZbVamYV9KF47l_z0Mj-5ER4dVAdUWOotDgP1CznzG4mcoCaT02nLNzdAAjew"
+        - name: apic-product-file
+          value: greetings_1.0.0.yaml
+        - name: apic-api-file
+          value: HelloApi-1.0.0.yaml
+        - name: apic-repo-url
+          value: https://github.com/pedro-jmanuel/apic-repo.git
+        workspaces:
+          - name: shared-workspace
+            emptyDir: {}
+

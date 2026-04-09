@@ -1,0 +1,20 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: apic-listener
+spec:
+  serviceAccountName: tekton-robot-apic
+  triggers:
+    - name: trigger
+      bindings:
+        - ref: apic-event-binding
+      template:
+        ref: apic-commit-tt
+      interceptors:
+        - github:
+            secretRef:
+              secretName: git-secret
+              secretKey: secretToken
+            eventTypes:
+              - push
+
