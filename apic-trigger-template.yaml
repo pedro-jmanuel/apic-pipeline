@@ -7,7 +7,7 @@ spec :
     - apiVersion: tekton.dev/v1
       kind: PipelineRun
       metadata:
-        generateName: apic-pipeline-publish-api-products-run-
+        generateName: apic-publish-api-products-run-
       spec:
         pipelineRef:
           name: apic-pipeline-publish-api-products
